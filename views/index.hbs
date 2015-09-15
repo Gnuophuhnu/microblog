@@ -1,2 +1,17 @@
 <h1>{{title}}</h1>
 <p>Hello {{currentUser}}</p>
+<button id="logout">LOG OUT</button>
+<!-- show all of the posts -->
+<ul>
+{{#each posts}}
+<li>USER: {{user}}, POST: {{post}}</li>
+{{/each}}
+</ul>
+<script type="text/javascript">
+$("#logout").click(function(e) {
+   // clear out the cookie
+   Cookies.remove('username');
+   // redirect to /login
+   window.location = "/login";
+})
+</script>

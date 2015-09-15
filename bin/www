@@ -82,6 +82,12 @@ function onError(error) {
  */
 
 function onListening() {
+  // load in users.json and posts.json and store in app.locals
+  app.locals.users = ["jeff", "jesse", "erik"];
+  app.locals.posts = [];
+  app.locals.posts.push({user: "jeff", post: "This is Jeff's first post!"})
+  app.locals.posts.push({user: "erik", post: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."})
+  app.locals.posts.push({user: "jesse", post: "Mel iriure tractatos an, ei maiestatis scribentur eos, no ius phaedrum oportere. At mei summo scripta, ea pri agam nullam petentium, an homero euismod eam. Liber dicit cu vis, te his melius omnesque. Cu sed veniam facete vituperatoribus. Tibique pertinacia efficiendi ad has, eu eum simul aliquam intellegat, ea affert comprehensam pri. Prompta delicatissimi an pro, unum augue adversarium est ne, iusto corrumpit no ius."})
   var addr = server.address();
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr

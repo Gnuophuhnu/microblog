@@ -1,13 +1,18 @@
 var express = require('express');
+var _ = require("lodash");
 var router = express.Router();
+
+var isLoggedIn = function(req) {
+  return req.cookies.username !== undefined
+}
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
   // if logged in, cool
   console.log(req.cookies);
-  if (req.cookies.username !== undefined) {
-    res.render('index', { title: 'Express' });
+  if (isLoggedIn(req)) {
+    res.render('index', { title: 'Home Page', posts: req.app.locals.posts });
   } else {
     res.redirect("/login");
   }
@@ -17,22 +22,19 @@ router.get('/', function(req, res, next) {
 // POST (from the login form)
 router.post('/login', function(req, res, next) {
   var username = req.body.username;
+  if (req.app.locals.users.indexOf(username) < 0) {
+    req.app.locals.users.push(username)
+  }
   res.cookie('username', username);
-  // req.cookies.currentUser = req.body.username;
-  // cookieParser.parse("username=" + req.body.username);
-
-  // save a cookie with the key `username` and value req.body.username
-
-  // if logged in, cool
-  // else redirect to /login
-  res.redirect("/")
-  // res.render('index', { title: 'Express', currentUser: username });
+  res.redirect("/");
 });
 
 router.get('/login', function(req, res, next) {
-  // if logged in, redirect to "/"
-  // else show the login template
-  res.render('login')
+  if (isLoggedIn(req)) {
+    res.redirect('/');
+  } else {
+    res.render('login')
+  }
 })
 
 
