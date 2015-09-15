@@ -5,11 +5,17 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
 
   // if logged in, cool
-  // else redirect to /login
-  res.render('index', { title: 'Express' });
+  console.log(req.cookies);
+  if (req.cookies.username !== undefined) {
+    res.render('index', { title: 'Express' });
+  } else {
+    res.redirect("/login");
+  }
+
 });
 
-router.post('/', function(req, res, next) {
+// POST (from the login form)
+router.post('/login', function(req, res, next) {
   var username = req.body.username;
   res.cookie('username', username);
   // req.cookies.currentUser = req.body.username;
@@ -19,7 +25,8 @@ router.post('/', function(req, res, next) {
 
   // if logged in, cool
   // else redirect to /login
-  res.render('index', { title: 'Express', currentUser: username });
+  res.redirect("/")
+  // res.render('index', { title: 'Express', currentUser: username });
 });
 
 router.get('/login', function(req, res, next) {
