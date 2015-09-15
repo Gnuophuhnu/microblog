@@ -6,4 +6,12 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
+router.get('/:username', function(req, res, next) {
+  var username = req.params.username;
+  // if `username` is valid, show that user's posts,
+  // otherwise show an error page
+  // show `username's` posts
+  // res.send('respond with a resource');
+});
+
 module.exports = router;
