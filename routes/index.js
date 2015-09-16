@@ -55,14 +55,12 @@ router.post('/posts', function(req, res, next) {
   newPost._id = guid();
   req.app.locals.posts.unshift(newPost);
   saveData(req.app.locals);
-  // TODO: save the app.locals.posts to a json file on the server
   res.end();
-  // res.json(req.app.locals.posts);
 })
 
 // POST (from the login form)
 router.post('/login', function(req, res, next) {
-  var username = req.body.username;
+  var username = req.body.username.toLowerCase();
   // remove leading spaces from the inputted username
   while (username[0] === " ") {
     username = username.slice(1);

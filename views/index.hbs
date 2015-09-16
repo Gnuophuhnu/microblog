@@ -15,17 +15,35 @@ function submitNewPost() {
   // 1. make POST request to router so that it can save the new post data to app.locals.posts
   // 2. then calls displayPosts();
 }
+function highlightAtMentions(post) {
+    // turn all @mentions into hyperlinks to that user's page
+  var allWords = post.split(" ");
+  var regex = /^@[\w\-]+/;
+  var newWords = allWords.map(function(e) {
+    var result = e.match(regex);
+    if (result) {
+      var newString = "<a href='users/" + result[0].slice(1) + "'>" + result[0] + "</a>";
+      if (result[0] !== result.input) {
+        newString += result.input.slice(result[0].length);
+      }
+      return newString;
+    } else {
+      return e;
+    }
+  })
+  return newWords.join(" ");
+}
+
 function displayPosts() {
   $("#posts").empty();
   $.getJSON("/posts", function(data) {
     // create some DOM elements and append to the #posts ul
     var $posts = $("#posts");
     data.forEach(function(e) {
-      var $li = $("<li>").html(e.user + " said: " + e.post + " at " + e._timestamp + " " + e._id).addClass(e.user);
+      var $li = $("<li>").html("<a href='users/" + e.user + "'>" + e.user + "</a> said: " + highlightAtMentions(e.post) + " at " + e._timestamp + " " + e._id).addClass(e.user);
       $posts.append($li);
     });
   })
-
 }
 $("#logout").click(function(e) {
    // clear out the cookie
