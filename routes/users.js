@@ -1,12 +1,17 @@
 var express = require('express');
 var router = express.Router();
 
+var isLoggedIn = function(req) {
+  return req.cookies.username !== undefined
+}
+
+
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  // list all users
-  // res.send('show list of all users');
-  console.log(req.app.locals);
-  console.log(req.app.locals.users);
+  if (!isLoggedIn(req)) {
+    res.redirect('/login')
+  }
   var userObjects = req.app.locals.users.map(function(e) {
     return {username: e};
   })
@@ -14,6 +19,9 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:username', function(req, res, next) {
+  if (!isLoggedIn(req)) {
+    res.redirect('/login')
+  }
   var username = req.params.username;
   var allposts = req.app.locals.posts;
   var posts = allposts.filter(function(e) {
