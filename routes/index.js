@@ -3,6 +3,7 @@ var _ = require("lodash");
 var router = express.Router();
 var fs = require('fs');
 var path = require('path');
+var moment = require('moment');
 
 var saveData = function(data) {
   console.log("saveData called");
@@ -51,7 +52,9 @@ router.post('/posts', function(req, res, next) {
   console.log(req.body.user);
   console.log(req.body.post);
   var newPost = {user:req.body.user, post:req.body.post};
-  newPost._timestamp = new Date();
+  var date = new Date();
+  newPost._timestamp = date;
+  newPost.prettytimestamp = moment(date).format("h:mm:ss");
   newPost._id = guid();
   req.app.locals.posts.unshift(newPost);
   saveData(req.app.locals);

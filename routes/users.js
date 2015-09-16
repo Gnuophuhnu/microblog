@@ -15,10 +15,15 @@ router.get('/', function(req, res, next) {
 
 router.get('/:username', function(req, res, next) {
   var username = req.params.username;
-  // if `username` is valid, show that user's posts,
-  // otherwise show an error page
-  // show `username's` posts
-  res.send('this is the page for: ' + username);
+  var allposts = req.app.locals.posts;
+  var posts = allposts.filter(function(e) {
+    return e.user === username;
+  })
+  // don't show a page for an invalid username
+  if (req.app.locals.users.indexOf(username) < 0) {
+    res.send("<h1>404!!!</h1>");
+  }
+  res.render('userpage', {user: username, posts: posts});
 });
 
 module.exports = router;
