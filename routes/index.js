@@ -8,16 +8,26 @@ var isLoggedIn = function(req) {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-
   // if logged in, cool
-  console.log(req.cookies);
   if (isLoggedIn(req)) {
-    res.render('index', { title: 'Home Page', posts: req.app.locals.posts });
+    res.render('index', { title: 'Home Page'});
   } else {
     res.redirect("/login");
   }
-
 });
+
+router.get('/posts', function(req, res, next) {
+  res.json(req.app.locals.posts);
+})
+
+router.post('/posts', function(req, res, next) {
+  // save the data
+  console.log(req.body.user);
+  console.log(req.body.post);
+  req.app.locals.posts.unshift({user:req.body.user, post:req.body.post});
+  res.end();
+  // res.json(req.app.locals.posts);
+})
 
 // POST (from the login form)
 router.post('/login', function(req, res, next) {
