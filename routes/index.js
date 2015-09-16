@@ -1,6 +1,23 @@
 var express = require('express');
 var _ = require("lodash");
 var router = express.Router();
+var fs = require('fs');
+var path = require('path');
+
+var saveData = function(data) {
+  console.log("saveData called");
+  var jsonFilePath = path.join(__dirname, '..', 'bin/data.json');
+  console.log(jsonFilePath);
+  //
+  var dataObject = {};
+  dataObject.users = data.users;
+  dataObject.posts = data.posts;
+  fs.writeFile(jsonFilePath, JSON.stringify(dataObject), function (err, data) {
+    if (err) console.log("ERROR");
+    // if (err) throw err;
+    console.log("saved data");
+  });
+}
 
 var guid = function() {
 	function s4() {
@@ -37,6 +54,7 @@ router.post('/posts', function(req, res, next) {
   newPost._timestamp = new Date();
   newPost._id = guid();
   req.app.locals.posts.unshift(newPost);
+  saveData(req.app.locals);
   // TODO: save the app.locals.posts to a json file on the server
   res.end();
   // res.json(req.app.locals.posts);
@@ -51,7 +69,8 @@ router.post('/login', function(req, res, next) {
   }
   if (username === "") res.redirect("/login")
   if (req.app.locals.users.indexOf(username) < 0) {
-    req.app.locals.users.push(username)
+    req.app.locals.users.push(username);
+    saveData(req.app.locals);
   }
   res.cookie('username', username);
   res.redirect("/");
