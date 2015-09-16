@@ -11,6 +11,7 @@
 
 
 <script type="text/javascript">
+var usernames = [];
 function submitNewPost() {
   // 1. make POST request to router so that it can save the new post data to app.locals.posts
   // 2. then calls displayPosts();
@@ -21,7 +22,7 @@ function highlightAtMentions(post) {
   var regex = /^@[\w\-]+/;
   var newWords = allWords.map(function(e) {
     var result = e.match(regex);
-    if (result) {
+    if (result && usernames.indexOf(result[0].slice(1)) >= 0) {
       var newString = "<a href='users/" + result[0].slice(1) + "'>" + result[0] + "</a>";
       if (result[0] !== result.input) {
         newString += result.input.slice(result[0].length);
@@ -69,7 +70,11 @@ $(function() {
   console.log("page is ready");
   // $("#post-content").focus();
   // make AJAX GET call to /posts
-  displayPosts();
+  $.getJSON("/allusernames", function(data) {
+    usernames = data;
+    console.log(usernames);
+    displayPosts();
+  })
 
 });
 </script>

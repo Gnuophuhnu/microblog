@@ -38,11 +38,15 @@ var isLoggedIn = function(req) {
 router.get('/', function(req, res, next) {
   // if logged in, cool
   if (isLoggedIn(req)) {
-    res.render('index', { title: 'Home Page', currentUser: req.cookies.username});
+    res.render('index', { title: 'Home Page', currentUser: req.cookies.username, allUsers: req.app.locals.users});
   } else {
     res.redirect("/login");
   }
 });
+
+router.get('/allusernames', function(req, res, next) {
+  res.json(req.app.locals.users);
+})
 
 router.get('/posts', function(req, res, next) {
   res.json(req.app.locals.posts);
