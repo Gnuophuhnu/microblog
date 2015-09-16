@@ -1,17 +1,46 @@
 <h1>{{title}}</h1>
 <p>Hello {{currentUser}}</p>
 <button id="logout">LOG OUT</button>
+<button id="submit-post">SUBMIT NEW POST</button>
 <!-- show all of the posts -->
-<ul>
-{{#each posts}}
-<li>USER: {{user}}, POST: {{post}}</li>
-{{/each}}
+<ul id="posts">
 </ul>
+
+
 <script type="text/javascript">
+function submitNewPost() {
+  // 1. make POST request to router so that it can save the new post data to app.locals.posts
+  // 2. then calls displayPosts();
+}
+function displayPosts() {
+  $("#posts").empty();
+  $.getJSON("/posts", function(data) {
+    // create some DOM elements and append to the #posts ul
+    var $posts = $("#posts");
+    data.forEach(function(e) {
+      var $li = $("<li>").html(e.user + " said: " + e.post);
+      $posts.append($li);
+    });
+  })
+
+}
 $("#logout").click(function(e) {
    // clear out the cookie
    Cookies.remove('username');
    // redirect to /login
    window.location = "/login";
-})
+});
+$("#submit-post").click(function(e) {
+  // send some post data to
+  $.post("/posts", {user: "jeff", post: "a new post from Jeff"}, function() {
+    console.log("finished posting the new post from jeff");
+    displayPosts();
+  })
+});
+$(function() {
+  console.log("page is ready");
+  // make AJAX GET call to /posts
+  displayPosts();
+
+});
 </script>
