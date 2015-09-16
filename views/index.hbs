@@ -1,8 +1,11 @@
 <h1>{{title}}</h1>
 <p>Hello {{currentUser}}</p>
 <button id="logout">LOG OUT</button>
-<button id="submit-post">SUBMIT NEW POST</button>
-<!-- show all of the posts -->
+<form>
+  <input type="text" name="post-content" value="" id="post-content" placeholder="What are you up to?" autofocus>
+  <input type="submit" name="button" value="POST!" id="post-button">
+</form>
+<!-- show all of the posts in this list -->
 <ul id="posts">
 </ul>
 
@@ -18,7 +21,7 @@ function displayPosts() {
     // create some DOM elements and append to the #posts ul
     var $posts = $("#posts");
     data.forEach(function(e) {
-      var $li = $("<li>").html(e.user + " said: " + e.post);
+      var $li = $("<li>").html(e.user + " said: " + e.post + " at " + e._timestamp + " " + e._id).addClass(e.user);
       $posts.append($li);
     });
   })
@@ -30,15 +33,23 @@ $("#logout").click(function(e) {
    // redirect to /login
    window.location = "/login";
 });
-$("#submit-post").click(function(e) {
+$("#post-button").click(function(e) {
+  e.preventDefault();
   // send some post data to
-  $.post("/posts", {user: "jeff", post: "a new post from Jeff"}, function() {
-    console.log("finished posting the new post from jeff");
+  var newPost = {};
+  var currentUser = Cookies.get('username');
+  var postContent = $("#post-content").val();
+  newPost.user = currentUser;
+  newPost.post = postContent;
+  $("#post-content").val("");
+  $.post("/posts", newPost, function() {
+    console.log("finished posting the new post from " + currentUser);
     displayPosts();
   })
 });
 $(function() {
   console.log("page is ready");
+  // $("#post-content").focus();
   // make AJAX GET call to /posts
   displayPosts();
 
