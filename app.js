@@ -60,15 +60,10 @@ app.use(function(err, req, res, next) {
 
 Handlebars.registerHelper({
   prettydate: function(date) {
-    console.log("called afsda");
     return moment(date).format("h:mm:ss")
   },
-  addbutton: function(id, options) {
-    var userPage = options.data.root.username;
-    var loggedInUser = options.data.root.usercookie;
-    console.log("options: ");
-    console.log(options);
-    if (userPage === loggedInUser) {
+  addbutton: function(username, usercookie, id, options) {
+    if (username === usercookie) {
       return "<button class='delete-btn' data-post-id='" + id + "'>DELETE</button>";
     }
   },
