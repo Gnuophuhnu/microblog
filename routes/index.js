@@ -53,8 +53,6 @@ router.get('/posts', function(req, res, next) {
 })
 
 router.post('/posts', function(req, res, next) {
-  console.log(req.body.user);
-  console.log(req.body.post);
   var newPost = {user:req.body.user, post:req.body.post};
   var date = new Date();
   newPost._timestamp = date;
