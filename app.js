@@ -60,7 +60,27 @@ app.use(function(err, req, res, next) {
 
 Handlebars.registerHelper({
   prettydate: function(date) {
+    console.log("called afsda");
     return moment(date).format("h:mm:ss")
+  },
+  shouldaddbutton: function(username, usercookie, id) {
+    // console.log(username);
+    // console.log("called newhelper with: " + username + " " + usercookie);
+    console.log("username: " + username);
+    console.log("usercookie: " + usercookie);
+    if (username === usercookie) {
+      return "<button class='delete-btn' data-post-id='" + id + "'>DELETE</button>";
+    }
+  },
+  addjs: function(username, usercookie) {
+    if (username === usercookie) {
+      // var ajaxCall =
+      // var output = "<script>$('.delete-btn').click(function(e) {$.ajax({url: '../delete/' + $(this).attr('data-post-id'), method: 'DELETE'}).done(function() {location.reload()}))</script>"
+      var output = "<script>$('.delete-btn').click(function(e) {$.ajax({url: 'delete/' + $(this).attr('data-post-id'), method: 'DELETE'}).done(function() {location.reload()})})</script>"
+      return output;
+    } else {
+      return;
+    }
   }
 });
 
