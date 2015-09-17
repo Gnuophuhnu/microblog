@@ -1,16 +1,6 @@
 <h1>Page For {{user}}</h1>
 <ul>
   {{#each posts}}
-  <li>{{post}} - <span class="timestamp">{{_timestamp}}</span></li>
+  <li>{{post}} - <span class="timestamp">{{prettydate _timestamp}}</span></li>
   {{/each}}
 </ul>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
-<script type="text/javascript">
-$(function() {
-  $(".timestamp").each(function(index) {
-    var date = this.innerHTML;
-    this.innerHTML = moment(date).format("h:mm:ss");
-  });
-})
-</script>
