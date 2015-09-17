@@ -1,6 +1,7 @@
-<h1>Page For {{user}}</h1>
+<h1>Page For {{username}}</h1>
 <ul>
   {{#each posts}}
-  <li>{{post}} - <span class="timestamp">{{prettydate _timestamp}}</span></li>
+  <li>{{post}} - {{prettydate _timestamp}} - {{{shouldaddbutton username usercookie _id}}}</li>
   {{/each}}
 </ul>
+{{{addjs username usercookie}}}
