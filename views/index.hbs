@@ -12,27 +12,29 @@
 
 <script type="text/javascript">
 var usernames = [];
-function submitNewPost() {
-  // 1. make POST request to router so that it can save the new post data to app.locals.posts
-  // 2. then calls displayPosts();
-}
-function highlightAtMentions(post) {
-    // turn all @mentions into hyperlinks to that user's page
-  var allWords = post.split(" ");
-  var regex = /^@[\w\-]+/;
-  var newWords = allWords.map(function(e) {
-    var result = e.match(regex);
-    if (result && usernames.indexOf(result[0].slice(1)) >= 0) {
-      var newString = "<a href='users/" + result[0].slice(1) + "'>" + result[0] + "</a>";
-      if (result[0] !== result.input) {
-        newString += result.input.slice(result[0].length);
-      }
-      return newString;
+
+// Takes a raw "tweet" as a string and turns all @mentions into links to that user's profile page
+// Will not turn invalid user names into links
+function highlightMentionsInPost(post) {
+  var regex = /\B@[\w\-]+/g;
+  // The regex broken down:
+  //    \B : matches at the start of any word (match `@user`, not `me@domain.com`)
+  //    @ : Then look for the `@` symbol
+  //    [\w\-]+ : Then look for 1 or more word characters (letters, digits or underscores) or hyphens
+  //    /g : Search globally (don't stop at the first match)
+
+  // helper function to pass to the `replace()` call below
+  function replacer(match) {
+    // check to see if the matched username is a valid username
+    if (usernames.indexOf(match.slice(1)) >= 0) {
+      // then wrap the valid username in a link to that user's profile page
+      return "<a href='users/" + match.slice(1) + "'>" + match + "</a>";
     } else {
-      return e;
+      // if it's not a valid username, don't do anything to the match
+      return match;
     }
-  })
-  return newWords.join(" ");
+  }
+  return post.replace(regex, replacer);
 }
 
 function displayPosts() {
@@ -41,16 +43,14 @@ function displayPosts() {
     // create some DOM elements and append to the #posts ul
     var $posts = $("#posts");
     data.forEach(function(e) {
-      var $li = $("<li>").html("<a href='users/" + e.user + "'>" + e.user + "</a> said: " + highlightAtMentions(e.post) + " at " + e._timestamp + " " + e._id).addClass(e.user);
+      var $li = $("<li>").html("<a href='users/" + e.user + "'>" + e.user + "</a> said: " + highlightMentionsInPost(e.post) + " at " + e._timestamp + " " + e._id).addClass(e.user);
       $posts.append($li);
     });
   })
 }
 $("#logout").click(function(e) {
-   // clear out the cookie
-   Cookies.remove('username');
-   // redirect to /login
-   window.location = "/login";
+  Cookies.remove('username');
+  window.location = "/login";
 });
 $("#post-button").click(function(e) {
   e.preventDefault();
@@ -68,11 +68,9 @@ $("#post-button").click(function(e) {
 });
 $(function() {
   console.log("page is ready");
-  // $("#post-content").focus();
   // make AJAX GET call to /posts
   $.getJSON("/allusernames", function(data) {
     usernames = data;
-    console.log(usernames);
     displayPosts();
   })
 
