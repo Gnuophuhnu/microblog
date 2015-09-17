@@ -12,6 +12,7 @@
 
 <script type="text/javascript">
 var usernames = [];
+var posts = [];
 
 // Takes a raw "tweet" as a string and turns all @mentions into links to that user's profile page
 // Will not turn invalid user names into links
@@ -38,9 +39,13 @@ function highlightMentionsInPost(post) {
 }
 
 function displayPosts() {
-  $("#posts").empty();
   $.getJSON("/posts", function(data) {
+    if (_.isEqual(data, posts)) {
+      return;
+    }
+    posts = data;
     // create some DOM elements and append to the #posts ul
+    $("#posts").empty();
     var $posts = $("#posts");
     data.forEach(function(e) {
       var $li = $("<li>").html("<a href='users/" + e.user + "'>" + e.user + "</a> said: " + highlightMentionsInPost(e.post) + " at " + e._timestamp + " " + e._id).addClass(e.user);
@@ -72,6 +77,7 @@ $(function() {
   $.getJSON("/allusernames", function(data) {
     usernames = data;
     displayPosts();
+    setInterval(displayPosts, 1000 * 5);
   })
 
 });
