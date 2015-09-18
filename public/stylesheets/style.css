@@ -8,7 +8,7 @@
 body {
   font-family: 'Open Sans', sans-serif, Helvetica, Arial, sans-serif;
   background-color: #F2F2F2;
-  color: whitesmoke;
+  color: black;
 }
 a {
   color: #00B7FF;
@@ -90,12 +90,53 @@ a {
   list-style-type: none;
   padding: 0;
 }
+
+
 #index li {
+  width: 100%;
+  min-height: 30px; 
   background-color: white;
   margin: 5px 0;
   padding: 10px 5px;
   border: 1px solid #3C948B;
+  display: block;
 }
+
+#index .divImage {
+  width: 20%;
+  /*float: left;*/
+}
+.divImage img {
+  width: 50px;
+  float: left;
+  margin-right: 15px;
+}
+
+.name {
+  width: 50%;
+  display: inline-block;
+  text-align: left;
+
+}
+
+.time {
+  display: inline-block;
+  text-align: right;
+  width: 50%;
+  float: right;
+}
+
+.postMessage{
+  padding-top: 15px;
+}
+
+.divPost {
+  width: 80%;
+  display: inline-block;
+}
+
+
+
 #index .name {
 }
 #index .active, .active a {

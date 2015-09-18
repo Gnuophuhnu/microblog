@@ -19,7 +19,7 @@
     <ul id="posts">
     </ul>
   </div>
-  
+
 </div>
 
 
@@ -75,7 +75,26 @@ function displayPosts() {
     $("#posts").empty();
     var $posts = $("#posts");
     data.forEach(function(e) {
-      var $li = $("<li>").html("<a href='users/" + e.user + "'>" + "<span class='name'>" + e.user + "</span> </a> said: " + highlightMentionsInPost(e.post) + " at " + e._timestamp + " " + e._id).addClass(e.user);
+
+      var $li = $("<li>");
+
+      var $postWrap = $("<div>").addClass('postWrap');
+      var $divImage = $("<div>").addClass('divImage').html("<img src='http://ak-hdl.buzzfed.com/static/enhanced/web03/2012/6/20/15/anigif_enhanced-buzz-28055-1340221632-0_preview.gif'>");
+
+      var $divPost = $("<div>").addClass('divPost');
+      var $postHeader = $("<div>").html('<a href="users/' + e.user + '">' + '<div class="name">' + e.user + '</div>' + '</a>' + '<div class="time">' + e._timestamp + '</div>').addClass('postHeader');
+      var $postMessage = $("<div>").html("<p>" +  e.post + "</p>").addClass('postMessage');
+
+      $divPost.append($postHeader).append($postMessage);
+      $postWrap.append($divImage).append($divPost)
+
+      $li.addClass(e.user).append($postWrap);
+
+
+// .html("<a href='users/" + e.user + "'>" + "<span class='name'>" + e.user + "</span> </a> said: " + highlightMentionsInPost(e.post) + " at " + e._timestamp + " " + e._id).addClass(e.user);
+
+
+
       if (e.user == Cookies.get('username')) {
         $li.addClass('active');
       }
