@@ -4,8 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var moment = require('moment');
 var Handlebars = require('hbs');
+var TimestampFormatter = require('./public/javascripts/TimestampFormatter.js');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -34,6 +34,8 @@ app.use(function(req, res, next) {
   next(err);
 });
 
+var tf = new TimestampFormatter();
+
 // error handlers
 
 // development error handler
@@ -60,7 +62,7 @@ app.use(function(err, req, res, next) {
 
 Handlebars.registerHelper({
   prettydate: function(date) {
-    return moment(date).format("h:mm:ss")
+    return tf.getPrettyDate(date);
   },
   addbutton: function(username, usercookie, id, options) {
     if (username === usercookie) {
