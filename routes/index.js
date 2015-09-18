@@ -56,7 +56,6 @@ router.post('/posts', function(req, res, next) {
   var newPost = {user:req.body.user, post:req.body.post};
   var date = new Date();
   newPost._timestamp = date;
-  newPost.prettytimestamp = moment(date).format("h:mm:ss");
   newPost._id = guid();
   req.app.locals.posts.unshift(newPost);
   saveData(req.app.locals);
