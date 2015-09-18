@@ -1,8 +1,56 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', sans-serif, Helvetica, Arial, sans-serif;
+  background-color: #E1E3E4;
 }
-
 a {
   color: #00B7FF;
+}
+
+/* Log-in Page */
+#login {
+  max-width: 500px;
+  margin: 20px auto;
+  padding-top: 5px;
+  text-align: center;
+  background-color: #FFFFFF;
+  color: #3C948B;
+}
+#login-button {
+  height: 40px;
+  width: 100%;
+  background-color: #3C948B;
+  color: white;
+  border: none;
+}
+#login-button:hover {
+  background-color: #60bfb5
+}
+#login #username {
+  width: 95%;
+  margin: 60px auto;
+  text-align: center;
+  color: #3C948B;
+  text-transform: lowercase;
+}
+
+
+/* Index Page */
+#index #posts {
+  margin: 10px 5px;
+  list-style-type: none;
+  padding: 0;
+}
+#index li {
+  background-color: white;
+  margin: 5px 0;
+  padding: 10px 5px;
+  border: 1px solid #3C948B;
+}
+#index .name {
+  display: inline-block;
+  height: 100%;
+  background-color: orange;
+}
+#index .active {
+  background-color: orange;
 }

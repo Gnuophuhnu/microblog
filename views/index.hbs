@@ -1,13 +1,16 @@
-<h1>{{title}}</h1>
-<p>Hello {{currentUser}}</p>
-<button id="logout">LOG OUT</button>
-<form>
-  <input type="text" name="post-content" value="" id="post-content" placeholder="What are you up to?" autofocus>
-  <input type="submit" name="button" value="POST!" id="post-button">
-</form>
-<!-- show all of the posts in this list -->
-<ul id="posts">
-</ul>
+<div class="row" id="index">
+  <h1>{{title}}</h1>
+  <p>Hello {{currentUser}}</p>
+  <button id="logout">LOG OUT</button>
+  <button id="my">My Tweets</button>
+  <form>
+    <input type="text" name="post-content" value="" id="post-content" placeholder="What are you up to?" autofocus>
+    <input type="submit" name="button" value="POST!" id="post-button">
+  </form>
+  <!-- show all of the posts in this list -->
+    <ul id="posts">
+    </ul>
+</div>
 
 
 <script type="text/javascript">
@@ -48,7 +51,10 @@ function displayPosts() {
     $("#posts").empty();
     var $posts = $("#posts");
     data.forEach(function(e) {
-      var $li = $("<li>").html("<a href='users/" + e.user + "'>" + e.user + "</a> said: " + highlightMentionsInPost(e.post) + " at " + e._timestamp + " " + e._id).addClass(e.user);
+      var $li = $("<li>").html("<a href='users/" + e.user + "'>" + "<span class='name'>" + e.user + "</span> </a> said: " + highlightMentionsInPost(e.post) + " at " + e._timestamp + " " + e._id).addClass(e.user);
+      if (e.user == Cookies.get('username')) {
+        $li.addClass('active');
+      }
       $posts.append($li);
     });
   })
@@ -79,6 +85,19 @@ $(function() {
     displayPosts();
     setInterval(displayPosts, 1000 * 5);
   })
-
 });
+
+var i = 0;
+$('#my').click(function() {
+  if (i % 2 == 0) {
+    $('li').hide();
+    $('.active').show(1750);
+    $('#my').html('all tweets');
+  }
+  else {
+    $('li').show(1750);
+    $('#my').html('my tweets');
+  }
+  i += 1;
+})
 </script>
