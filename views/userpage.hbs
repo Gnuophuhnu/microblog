@@ -1,7 +1,16 @@
 <h1>Page For {{username}}</h1>
+<button id="logout">LOG OUT</button>
+<a href="/"><button id="main-page">HOME</button></a>
 <ul>
   {{#each posts}}
   <li>{{post}} - {{prettydate _timestamp}}{{{addbutton ../username ../usercookie _id}}}</li>
   {{/each}}
 </ul>
 {{{addjs username usercookie}}}
+
+<script type="text/javascript">
+  $("#logout").click(function() {
+    Cookies.remove('username');
+    window.location = "/login";
+  });
+</script>
