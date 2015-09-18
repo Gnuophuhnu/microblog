@@ -12,6 +12,7 @@
 
       </form>
       <button id="logout">LOG OUT</button>
+      <a href="/users/{{currentUser}}"><button id="my-page">MY PAGE</button></a>
       <button id="my">My Tweets</button>
     </div>
 
@@ -33,13 +34,9 @@
 
   <!-- show all of the posts in this list -->
 
-
-
-
-
-
-
+<script type="text/javascript" src="javascripts/TimestampFormatter.js"></script>
 <script type="text/javascript">
+var tf = new TimestampFormatter();
 var usernames = [];
 var posts = [];
 
@@ -91,6 +88,7 @@ function displayPosts() {
     $("#posts").empty();
     var $posts = $("#posts");
     data.forEach(function(e) {
+<<<<<<< HEAD
 
       var $li = $("<li>");
 
@@ -98,7 +96,7 @@ function displayPosts() {
       var $divImage = $("<div>").addClass('divImage').html("<img src='http://ak-hdl.buzzfed.com/static/enhanced/web03/2012/6/20/15/anigif_enhanced-buzz-28055-1340221632-0_preview.gif'>");
 
       var $divPost = $("<div>").addClass('divPost');
-      var $postHeader = $("<div>").html('<a href="users/' + e.user + '">' + '<div class="name">' + e.user + '</div>' + '</a>' + '<div class="time">' + e._timestamp + '</div>').addClass('postHeader');
+      var $postHeader = $("<div>").html('<a href="users/' + e.user + '">' + '<div class="name">' + e.user + '</div>' + '</a>' + '<div class="time">' + tf.getPrettyDate(e._timestamp) + '</div>').addClass('postHeader');
       var $postMessage = $("<div>").html("<p>" +  e.post + "</p>").addClass('postMessage');
 
       $divPost.append($postHeader).append($postMessage);
