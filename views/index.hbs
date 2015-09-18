@@ -10,8 +10,9 @@
 <ul id="posts">
 </ul>
 
-
+<script type="text/javascript" src="javascripts/TimestampFormatter.js"></script>
 <script type="text/javascript">
+var tf = new TimestampFormatter();
 var usernames = [];
 var posts = [];
 
@@ -49,7 +50,7 @@ function displayPosts() {
     $("#posts").empty();
     var $posts = $("#posts");
     data.forEach(function(e) {
-      var $li = $("<li>").html("<a href='users/" + e.user + "'>" + e.user + "</a> said: " + highlightMentionsInPost(e.post) + " at " + e._timestamp + " " + e._id).addClass(e.user);
+      var $li = $("<li>").html("<a href='users/" + e.user + "'>" + e.user + "</a> said: " + highlightMentionsInPost(e.post) + " at " + tf.getPrettyDate(e._timestamp) + " " + e._id).addClass(e.user);
       $posts.append($li);
     });
   })
