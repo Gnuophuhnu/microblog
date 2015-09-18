@@ -1,8 +1,145 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-
+body {
+  font-family: 'Open Sans', sans-serif, Helvetica, Arial, sans-serif;
+  background-color: #F2F2F2;
+  color: black;
+}
 a {
   color: #00B7FF;
+}
+
+/* Log-in Page */
+#login {
+  width: 95%;
+  max-width: 500px;
+  margin: 10px auto;
+  padding-top: 5px;
+  text-align: center;
+  background-color: #FFFFFF;
+  color: #3C948B;
+  border: 1px solid #3C948B;
+}
+#login #username {
+  height: 30px;
+  width: 70%;
+}
+#login h3 {
+  padding-bottom: 25px;
+  border-bottom: 1px solid #3C948B;
+}
+#login-button {
+  height: 40px;
+  width: 100%;
+  background-color: #3C948B;
+  color: white;
+  border: none;
+}
+#login-button:hover {
+  background-color: #60bfb5
+}
+#login #username {
+  width: 95%;
+  margin: 60px auto;
+  text-align: center;
+  color: #3C948B;
+  text-transform: lowercase;
+}
+
+
+/* Index Page */
+#headerWrap {
+  background-color: #333333;
+  color: whitesmoke;
+}
+#header {
+  width: 95%;
+  max-width: 1200px;
+  margin: 0px auto;
+  padding: 10px 0;
+}
+#post-input {
+  height: 30px;
+  width: 80%;
+}
+#postsWrap {
+  width: 95%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+#post-content {
+  display: inline-block;
+  width: 90%;
+  height: 30px;
+  max-width: 600px;
+  padding: 5px;
+
+}
+#post-button {
+  margin: 15px;
+  clear: right;
+}
+
+#index #posts {
+  margin: 10px 5px;
+  list-style-type: none;
+  padding: 0;
+}
+
+
+#index li {
+  width: 100%;
+  min-height: 30px;
+  background-color: white;
+  margin: 5px 0;
+  padding: 10px 5px;
+  border: 1px solid #3C948B;
+  display: block;
+}
+
+#index .divImage {
+  width: 20%;
+  /*float: left;*/
+}
+.divImage img {
+  width: 50px;
+  float: left;
+  margin-right: 15px;
+}
+
+.name {
+  width: 50%;
+  display: inline-block;
+  text-align: left;
+
+}
+
+.time {
+  display: inline-block;
+  text-align: right;
+  width: 50%;
+  float: right;
+}
+
+.postMessage{
+  padding-top: 15px;
+}
+
+.divPost {
+  width: 80%;
+  display: inline-block;
+}
+
+
+
+#index .name {
+}
+#index .active, .active a {
+  background-color: #3C948B;
+  color: whitesmoke;
 }
