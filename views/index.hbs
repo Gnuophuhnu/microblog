@@ -1,16 +1,40 @@
-<div class="row" id="index">
-  <h1>{{title}}</h1>
-  <p>Hello {{currentUser}}</p>
-  <button id="logout">LOG OUT</button>
-  <button id="my">My Tweets</button>
-  <form>
-    <input type="text" name="post-content" value="" id="post-content" placeholder="What are you up to?" autofocus>
-    <input type="submit" name="button" value="POST!" id="post-button">
-  </form>
-  <!-- show all of the posts in this list -->
+<div id="index">
+
+  <div id="headerWrap">
+
+    <div id="header">
+      <h1>{{title}}</h1>
+      <p>Hello {{currentUser}}</p>
+      <form>
+        <input type="text" name="post-content" value="" id="post-content" placeholder="What are you up to?" autofocus>
+        <input type="submit" name="button" value="POST!" id="post-button">
+      </form>
+      <button id="logout">LOG OUT</button>
+      <button id="my">My Tweets</button>
+    </div>
+
+  </div>
+
+  <div id="postsWrap">
     <ul id="posts">
     </ul>
+  </div>
+  
 </div>
+
+
+
+
+
+
+
+
+  <!-- show all of the posts in this list -->
+
+
+
+
+
 
 
 <script type="text/javascript">
