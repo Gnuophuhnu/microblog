@@ -6,8 +6,10 @@
       <h1>{{title}}</h1>
       <p>Hello {{currentUser}}</p>
       <form>
-        <input type="text" name="post-content" value="" id="post-content" placeholder="What are you up to?" autofocus>
-        <input type="submit" name="button" value="POST!" id="post-button">
+        <input type="text" name="post-content" value="" id="post-content" maxlength="140" placeholder="What are you up to?" autofocus>
+        <input type="submit" name="button" value="POST!"  id="post-button">
+        <div id="counter"> 140 </div>
+
       </form>
       <button id="logout">LOG OUT</button>
       <button id="my">My Tweets</button>
@@ -40,6 +42,20 @@
 <script type="text/javascript">
 var usernames = [];
 var posts = [];
+
+
+
+
+$('#post-content').on('keyup', function() {
+  var x = 140 - (this.value.length).toString();
+  $('#counter').html(x);
+  if (x == 0) {
+    $(this).css('background-color', 'red');
+  }
+});
+
+
+
 
 // Takes a raw "tweet" as a string and turns all @mentions into links to that user's profile page
 // Will not turn invalid user names into links
@@ -134,11 +150,11 @@ var i = 0;
 $('#my').click(function() {
   if (i % 2 == 0) {
     $('li').hide();
-    $('.active').show(1750);
+    $('.active').show();
     $('#my').html('all tweets');
   }
   else {
-    $('li').show(1750);
+    $('li').show();
     $('#my').html('my tweets');
   }
   i += 1;
